@@ -310,7 +310,7 @@
     </div> 
     
     <script src="main.js"></script>
-
+    
     <audio id="bg-music" autoplay loop>
     <source src="music/Out of my league.mp3" type="audio/mpeg">
   </audio>
@@ -319,10 +319,16 @@
     window.addEventListener("load", () => {
       const audio = document.getElementById("bg-music");
       audio.volume = 0.6; // define o volume em 60%
-      audio.play();
+
+      audio.play().catch(() => {
+        // se o navegador bloquear, toca no primeiro clique
+        document.addEventListener("click", () => {
+          audio.volume = 0.6; 
+          audio.play();
+        }, { once: true });
+      });
     });
   </script>
-
   </body>
 </html>
 
